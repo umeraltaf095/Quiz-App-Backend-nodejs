@@ -20,7 +20,7 @@ questionRouter.post(
 questionRouter.get(
   "/getQuestions",
   authenticToken,
-  authenticRole,
+
   showQuestion
 );
 

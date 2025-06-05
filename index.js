@@ -3,6 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import userRouter from "./src/routes/userRoutes.js";
 import questionRouter from "./src/routes/questionRoutes.js";
+import answerRouter from "./src/routes/answerRoutes.js";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ mongoose
 //Routes
 app.use('/', userRouter);
 app.use('/', questionRouter);
+app.use('/',answerRouter);
 app.get("/", (req, res) => {
   res.send("Hello from Express and MongoDB!");
 });

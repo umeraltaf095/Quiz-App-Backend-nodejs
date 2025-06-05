@@ -22,12 +22,26 @@ export const saveQuestion = async (req, res) => {
 export const showQuestion = async (req, res) => {
   try {
     const data = await questionModel.find();
-    if (role == "teacher") {
-      return res.json(data);
-    } else if (role == "student") {
-      return res.json(data.question, data.options);
+    if (req.user == "teacher") {
+      res.json(data);
+    } else if (req.user == "student") {
+      res.json(
+        data.map((i) => ({
+          question: i.question,
+          options: i.options,
+        }))
+      );
     }
   } catch (err) {
     res.json({ error: err.message });
   }
 };
+
+// export const postAnswer = async(req, res)=>{
+//     try{
+//         const
+
+//     } catch(err){
+//         res.json({error: err.message});
+//     }
+// }
