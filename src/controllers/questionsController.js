@@ -27,6 +27,7 @@ export const showQuestion = async (req, res) => {
     } else if (req.user == "student") {
       res.json(
         data.map((i) => ({
+          id: i.id,
           question: i.question,
           options: i.options,
         }))
@@ -37,11 +38,3 @@ export const showQuestion = async (req, res) => {
   }
 };
 
-// export const postAnswer = async(req, res)=>{
-//     try{
-//         const
-
-//     } catch(err){
-//         res.json({error: err.message});
-//     }
-// }

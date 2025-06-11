@@ -10,11 +10,13 @@ export const submitAnswer = async (req, res) => {
         res.json({ message: "please select any option" });
       }
       const saveAnswer = await answerModel.create(data);
-      return res.json(saveAnswer);
+       return res.json(saveAnswer);
     } else {
-        res.json({message:"Access denied"})
+        res.json({message:"Teachers cannot perform a quiz"})
     }
   } catch (err) {
     res.json({ error: err.message });
   }
 };
+
+

@@ -4,13 +4,14 @@ import mongoose from "mongoose";
 import userRouter from "./src/routes/userRoutes.js";
 import questionRouter from "./src/routes/questionRoutes.js";
 import answerRouter from "./src/routes/answerRoutes.js";
+import resultRouter from "./src/routes/resultRoutes.js";
 
 dotenv.config();
 
  const app = express();
  app.use(express.json());
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const MONGO_URI = process.env.MONGO_URI;
 
 // Connect to MongoDB
@@ -23,6 +24,7 @@ mongoose
 app.use('/', userRouter);
 app.use('/', questionRouter);
 app.use('/',answerRouter);
+app.use('/', resultRouter);
 app.get("/", (req, res) => {
   res.send("Hello from Express and MongoDB!");
 });

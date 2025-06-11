@@ -52,7 +52,7 @@ export const loginUser = async (req, res) => {
         expiresIn: "1h",
       }
     );
-    return res.json({ message: "User logged in successfully", token: token });
+    return res.json({ message: `${role} logged in successfully`, token: token });
   } catch (error) {
     res.status(500).json({ message: "Error occured", error: error.message });
   }

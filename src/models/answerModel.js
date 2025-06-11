@@ -4,14 +4,15 @@ const answersSchema = new mongoose.Schema({
   userId: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   answers: {
     type: [
       {
         questionId: {
-            type:String,
-            unique: true},
+          type: String,
+          unique: true,
+        },
         selectedAnswer: String,
       },
     ],
