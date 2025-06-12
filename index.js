@@ -8,8 +8,8 @@ import resultRouter from "./src/routes/resultRoutes.js";
 
 dotenv.config();
 
- const app = express();
- app.use(express.json());
+const app = express();
+app.use(express.json());
 
 const PORT = process.env.PORT || 3001;
 const MONGO_URI = process.env.MONGO_URI;
@@ -21,10 +21,10 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 //Routes
-app.use('/', userRouter);
-app.use('/', questionRouter);
-app.use('/',answerRouter);
-app.use('/', resultRouter);
+app.use("/", userRouter);
+app.use("/", questionRouter);
+app.use("/", answerRouter);
+app.use("/", resultRouter);
 app.get("/", (req, res) => {
   res.send("Hello from Express and MongoDB!");
 });

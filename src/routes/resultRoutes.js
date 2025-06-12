@@ -4,6 +4,6 @@ import express from "express";
 
 const resultRouter = express.Router();
 
-resultRouter.get('/result', checkAnswers);
+resultRouter.get("/result", checkAnswers);
 
 export default resultRouter;

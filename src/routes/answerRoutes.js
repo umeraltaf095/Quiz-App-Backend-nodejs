@@ -5,6 +5,6 @@ import express from "express";
 
 const answerRouter = express.Router();
 
-answerRouter.post('/submitAnswers', authenticToken, submitAnswer);
+answerRouter.post("/submitAnswers", authenticToken, submitAnswer);
 
 export default answerRouter;

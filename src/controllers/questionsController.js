@@ -37,4 +37,3 @@ export const showQuestion = async (req, res) => {
     res.json({ error: err.message });
   }
 };
-

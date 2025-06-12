@@ -14,27 +14,37 @@ export const checkAnswers = async (req, res) => {
       return res.json({ message: "No questions found" });
     }
 
-    let evaluationResults = submittedAnswers.map((answer) => {
-      const question = questions.find((q) => q.id === answer.questionId);
+    let evaluationResults = [];
+    let marks = 0;
 
-      if (question) {
-        return {
-          questionId: answer.questionId,
-          userId: answer.userId,
-          selectedOption: answer.answers[0].selectedAnswer,
-          correctOption: question.correctOption,
-          isCorrect: answer.answers[0].selectedAnswer === question.correctOption,
-        };
-      } else {
-        return {
-          questionId: answer.questionId,
-          userId: answer.userId,
-          message: "Question not found for the provided answer",
-        };
-      }
+    submittedAnswers.forEach((answer) => {
+      answer.answers.forEach((ans) => {
+        const question = questions.find(
+          (q) => q._id.toString() === ans.questionId
+        );
+
+        if (question) {
+          evaluationResults.push({
+            questionId: ans.questionId,
+            userId: answer.userId,
+            selectedOption: ans.selectedAnswer,
+            correctOption: question.correctOption,
+            isCorrect: ans.selectedAnswer === question.correctOption,
+          });
+          if (ans.selectedAnswer === question.correctOption) {
+            marks++;
+          }
+        } else {
+          evaluationResults.push({
+            questionId: ans.questionId,
+            userId: answer.userId,
+            message: "Question not found",
+          });
+        }
+      });
     });
 
-    res.json(evaluationResults);
+    res.json({ evaluationResults, TotlaMarks: marks });
   } catch (err) {
     res.json({ error: err.message });
   }
