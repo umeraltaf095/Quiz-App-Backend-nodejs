@@ -1,5 +1,6 @@
 import answerModel from "../models/answerModel.js";
 import questionModel from "../models/quizModel.js";
+import resultModel from "../models/resultModel.js";
 
 export const checkAnswers = async (req, res) => {
   try {
@@ -15,36 +16,48 @@ export const checkAnswers = async (req, res) => {
     }
 
     let evaluationResults = [];
-    let marks = 0;
 
-    submittedAnswers.forEach((answer) => {
-      answer.answers.forEach((ans) => {
-        const question = questions.find(
-          (q) => q._id.toString() === ans.questionId
-        );
+    await Promise.all(
+      submittedAnswers.map(async (answer) => {
+        let marks = 0;
 
-        if (question) {
-          evaluationResults.push({
-            questionId: ans.questionId,
-            userId: answer.userId,
-            selectedOption: ans.selectedAnswer,
-            correctOption: question.correctOption,
-            isCorrect: ans.selectedAnswer === question.correctOption,
-          });
-          if (ans.selectedAnswer === question.correctOption) {
-            marks++;
+        answer.answers.forEach((ans) => {
+          const question = questions.find(
+            (q) => q._id.toString() === ans.questionId
+          );
+
+          if (question) {
+            evaluationResults.push({
+              questionId: ans.questionId,
+              userId: answer.userId,
+              selectedOption: ans.selectedAnswer,
+              correctOption: question.correctOption,
+              isCorrect: ans.selectedAnswer === question.correctOption,
+            });
+
+            if (ans.selectedAnswer === question.correctOption) {
+              marks++;
+            }
+          } else {
+            evaluationResults.push({
+              questionId: ans.questionId,
+              userId: answer.userId,
+              message: "Question not found",
+            });
           }
-        } else {
-          evaluationResults.push({
-            questionId: ans.questionId,
-            userId: answer.userId,
-            message: "Question not found",
-          });
+        });
+        const user_id = answer.userId;
+        const existingUser = await resultModel.findOne({userId: user_id});
+        if (!existingUser) {
+          await resultModel.create({ userId: answer.userId, result: marks });
         }
-      });
-    });
+      })
+    );
 
-    res.json({ evaluationResults, TotlaMarks: marks });
+    res.json({
+      evaluationResults,
+      message: "Result has been stored successfully",
+    });
   } catch (err) {
     res.json({ error: err.message });
   }
