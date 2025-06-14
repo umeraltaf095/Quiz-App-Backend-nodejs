@@ -28,7 +28,7 @@ export const authenticRole = async (req, res, next) => {
       next();
     } else {
       return res.json({
-        message: "Only user with a teacher roll can add questions",
+        message: "Access denied other than the teachers",
       });
     }
   } catch (err) {

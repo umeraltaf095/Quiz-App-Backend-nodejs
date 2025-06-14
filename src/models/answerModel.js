@@ -11,7 +11,6 @@ const answersSchema = new mongoose.Schema({
       {
         questionId: {
           type: String,
-          unique: true,
         },
         selectedAnswer: String,
       },
