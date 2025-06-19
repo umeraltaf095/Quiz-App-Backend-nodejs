@@ -5,16 +5,19 @@ import bcrypt from "bcrypt";
 export const registerController = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
-
-    if (!name || !email || !password || !role) {
-      return res.json({ message: "Field cannot be empty" });
-    } else {
-      const existingemail = await userModel.findOne({ email });
-      if (existingemail) {
-        return res.json({ message: "Email already exist" });
+    if (req.user.role === "admin") {
+      if (!name || !email || !password || !role) {
+        return res.json({ message: "Field cannot be empty" });
+      } else {
+        const existingemail = await userModel.findOne({ email });
+        if (existingemail) {
+          return res.json({ message: "Email already exist" });
+        }
+        await userModel.create({ name, email, password, role });
+        return res.json({ message: "User registered successfully" });
       }
-      await userModel.create({ name, email, password, role });
-      return res.json({ message: "User registered successfully" });
+    } else {
+      res.json({ message: `User cannot be registered by a ${role}` });
     }
   } catch (err) {
     res.json({ error: err.message });

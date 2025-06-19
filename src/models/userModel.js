@@ -17,7 +17,7 @@ const registerSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["student", "teacher"],
+    enum: ["student", "teacher", "admin"],
     required: true,
   },
 });

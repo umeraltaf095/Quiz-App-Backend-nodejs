@@ -12,7 +12,7 @@ export const submitAnswer = async (req, res) => {
       const saveAnswer = await answerModel.create(data);
       return res.json(saveAnswer);
     } else {
-      res.json({ message: "Teachers cannot perform a quiz" });
+      res.json({ message: `${req.user} cannot perform a quiz` });
     }
   } catch (err) {
     res.json({ error: err.message });

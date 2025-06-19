@@ -9,11 +9,11 @@ export const authenticToken = (req, res, next) => {
 
   try {
     const authentic = jwt.verify(jwtToken, process.env.SECRET_KEY);
-    console.log(authentic.role);
+     console.log(authentic.role);
     req.user = authentic.role;
 
     if (authentic) {
-      next();
+      return next();
     }
   } catch (err) {
     res.json({
@@ -25,7 +25,7 @@ export const authenticToken = (req, res, next) => {
 export const authenticRole = async (req, res, next) => {
   try {
     if (req.user == "teacher") {
-      next();
+      return next();
     } else {
       return res.json({
         message: "Access denied other than the teachers",
