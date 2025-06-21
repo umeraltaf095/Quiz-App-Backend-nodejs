@@ -4,7 +4,11 @@ import userModel from "./userModel.js";
 const resultSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "userModel",
+    ref: "userModel"
+  },
+   quizId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "questionModel"
   },
   result: {
     type: Number,

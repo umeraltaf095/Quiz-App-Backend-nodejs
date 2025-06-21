@@ -1,18 +1,16 @@
 import mongoose from "mongoose";
 
-
 const answersSchema = new mongoose.Schema({
   userId: {
-    type:mongoose.Schema.Types.ObjectId,
-    ref: 'UserModel',
-    required: true
-    
-  },
-   quizId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref : 'questionModel',
+    ref: "UserModel",
     required: true,
-     },
+  },
+  quizId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "questionModel",
+    required: true,
+  },
   answers: {
     type: [
       {

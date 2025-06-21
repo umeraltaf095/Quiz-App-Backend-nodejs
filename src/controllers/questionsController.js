@@ -13,22 +13,29 @@ export const saveQuestion = async (req, res) => {
 
 export const showQuestion = async (req, res) => {
   try {
-    const data = await questionModel.find();
+    const existingQuiz = req.query.quizId;
+
+    if (!existingQuiz) {
+      return res.json({ message: "Invalid quiz ID" });
+    }
+
+    const data = await questionModel.findOne({ _id: existingQuiz });
+
+    if (!data) {
+      return res.json({ message: "Requested quiz not found" });
+    }
 
     if (req.user === "teacher") {
       return res.json(data);
     } else if (req.user === "student") {
-      const formatted = data.flatMap((doc) =>
-        doc.questions.map((q) => ({
-          questionId: q._id,
-          question: q.question,
-          options: q.options,
-        }))
-      );
+      const formatted = data.questions.map((q) => ({
+        questionId: q._id,
+        question: q.question,
+        options: q.options,
+      }));
       return res.json(formatted);
     }
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
-

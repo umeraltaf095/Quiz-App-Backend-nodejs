@@ -11,6 +11,7 @@ export const authenticToken = (req, res, next) => {
     const authentic = jwt.verify(jwtToken, process.env.SECRET_KEY);
      console.log(authentic.role);
     req.user = authentic.role;
+    req.data = authentic;
 
     if (authentic) {
       return next();

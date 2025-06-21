@@ -31,6 +31,7 @@ export const checkAnswers = async (req, res) => {
       }
 
       await resultModel.create({
+        quizId: answer.quizId,
         userId: answer.userId,
         result: marks,
       });
